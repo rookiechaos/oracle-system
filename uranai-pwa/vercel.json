@@ -1,0 +1,5 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "../do-not-upload/uranai-pwa/dist",
+  "framework": "vite"
+}

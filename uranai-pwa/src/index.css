@@ -1,0 +1,147 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:           #050010;
+  --bg-card:      #0b0022;
+  --bg-card-alt:  #0f0030;
+  --cyan:         #00e5ff;
+  --cyan-dim:     rgba(0,229,255,0.12);
+  --cyan-glow:    rgba(0,229,255,0.5);
+  --cyan-border:  rgba(0,229,255,0.3);
+  --magenta:      #ff00dd;
+  --magenta-dim:  rgba(255,0,221,0.12);
+  --magenta-glow: rgba(255,0,221,0.5);
+  --magenta-border: rgba(255,0,221,0.3);
+  --green:        #00ff88;
+  --green-dim:    rgba(0,255,136,0.12);
+  --green-border: rgba(0,255,136,0.3);
+  --yellow:       #ffe500;
+  --red:          #ff0055;
+  --text:         #cce0ff;
+  --text-bright:  #ffffff;
+  --text-dim:     #3a4870;
+  --text-muted:   #252a50;
+  --border:       #180040;
+  --border-bright: #2d0065;
+}
+
+html, body, #root {
+  height: 100%;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, 'Hiragino Sans', 'Yu Gothic', BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  /* iPhone safe areas (notch / Dynamic Island / home indicator) */
+  padding-top:    env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left:   env(safe-area-inset-left);
+  padding-right:  env(safe-area-inset-right);
+}
+
+/* Prevent double-tap zoom on buttons (iOS Safari) */
+button, a { touch-action: manipulation; }
+
+button { cursor: pointer; border: none; background: none; font: inherit; }
+input, textarea { font: inherit; outline: none; }
+a { color: inherit; text-decoration: none; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 2px; }
+
+/* Glitch keyframes */
+@keyframes glitch-shift {
+  0%,100% { transform: translateX(0); opacity: 1; }
+  20%      { transform: translateX(4px); opacity: 0.8; }
+  40%      { transform: translateX(-3px); }
+  60%      { transform: translateX(2px); opacity: 0.9; }
+  80%      { transform: translateX(0); }
+}
+
+/* Cursor blink */
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* Matrix fall */
+@keyframes matrix-fall {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  10%  { opacity: 0.8; }
+  90%  { opacity: 0.4; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* Pulse */
+@keyframes pulse-glow {
+  0%,100% { opacity: 0.6; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.06); }
+}
+
+/* Scan line */
+@keyframes scan {
+  0%   { transform: translateY(-10px); }
+  100% { transform: translateY(500px); }
+}
+
+/* Fade in up */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up { animation: fade-up 0.6s ease forwards; }
+
+/* Spinner */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Neon button */
+.neon-btn {
+  background:    rgba(0,229,255,0.10);
+  border:        1px solid var(--cyan);
+  border-radius: 10px;
+  color:         var(--cyan);
+  font-weight:   700;
+  letter-spacing: 0.05em;
+  cursor:        pointer;
+  transition:    box-shadow 0.2s, background 0.2s;
+  box-shadow:    0 0 10px rgba(0,229,255,0.25);
+}
+.neon-btn:hover:not(:disabled) {
+  background: rgba(0,229,255,0.18);
+  box-shadow: 0 0 20px rgba(0,229,255,0.5), 0 0 40px rgba(0,229,255,0.2);
+}
+.neon-btn:active:not(:disabled) {
+  background: rgba(0,229,255,0.25);
+}
+
+/* Glitch pseudo-elements */
+.glitch {
+  position: relative;
+  display:  inline-block;
+}
+.glitch::before,
+.glitch::after {
+  content:  attr(data-text);
+  position: absolute;
+  inset:    0;
+  overflow: hidden;
+}
+.glitch::before {
+  color:     var(--magenta);
+  clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+  animation: glitch-shift 4s infinite steps(2);
+  opacity:   0.7;
+}
+.glitch::after {
+  color:     var(--cyan);
+  clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%);
+  animation: glitch-shift 3s 1.5s infinite steps(2);
+  opacity:   0.5;
+}
